@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banner Navidad VMT - Pulluzca</title>
+    <style>
+        /* --- FONDO DE LA PANTALLA (VERDE) --- */
+        body {
+            background: radial-gradient(circle, #46c73b 10%, #064203 100%);
+            /* CAMBIO IMPORTANTE: Permitimos que se pueda bajar (scroll) */
+            min-height: 100vh; margin: 0; font-family: 'Arial', sans-serif;
+            padding: 40px 10px; /* Un poco más de espacio arriba y abajo */
+            box-sizing: border-box;
+            overflow-x: hidden; /* Solo ocultamos el desplazamiento lateral */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Alineamos arriba para que al bajar se vea todo */
+        }
+
+        /* --- DECORACIONES FLOTANTES DEL FONDO VERDE --- */
+        .decoracion-fondo {
+            position: fixed; /* CAMBIO: Se quedan fijas en la pantalla mientras bajas */
+            color: rgba(255,255,255,0.2);
+            z-index: 0;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+            animation: flotar 4s infinite ease-in-out alternate;
+        }
+        .df-1 { top: 20px; left: 20px; font-size: 100px; animation-delay: 0s; }
+        .df-2 { bottom: 20px; right: 20px; font-size: 100px; animation-delay: 1s; }
+        .df-3 { top: 15%; right: 10%; font-size: 50px; animation-delay: 0.5s; }
+        .df-4 { bottom: 30%; left: 5%; font-size: 60px; animation-delay: 1.5s; }
+        .df-5 { top: 50%; left: 10%; font-size: 40px; animation-delay: 2s; } /* Elemento extra */
+
+        @keyframes flotar {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(20px) rotate(10deg); }
+        }
+
+        /* --- EL BANNER PRINCIPAL (PARTE ROJA) --- */
+        .banner-container {
+            width: 100%; max-width: 800px;
+            /* Textura de rayas + degradado rojo */
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    rgba(255,255,255,0.05) 0px,
+                    rgba(255,255,255,0.05) 2px,
+                    transparent 2px,
+                    transparent 10px
+                ),
+                linear-gradient(135deg, #b31217 0%, #e52d27 100%);
+            
+            border: 5px solid #d4af37; border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            color: white; text-align: center; 
+            padding: 50px 30px 40px 30px; /* Ajuste de relleno */
+            position: relative; 
+            z-index: 10;
+            margin: 20px 0; /* Margen para asegurar que se vea bien al hacer scroll */
+        }
+
+        /* --- LUCES NAVIDEÑAS INTERNAS --- */
+        .luces-container {
+            position: absolute; top: -5px; left: 0; width: 100%;
+            display: flex; justify-content: space-around;
+            pointer-events: none;
+        }
+
+        .luz {
+            width: 15px; height: 15px; border-radius: 50%;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(255, 255, 255, 0.8);
+            animation: parpadeo 1.5s infinite alternate;
+        }
+        .luz:nth-child(odd) { background-color: #ffeb3b; box-shadow: 0 2px 10px #ffeb3b; animation-delay: 0.2s; }
+        .luz:nth-child(even) { background-color: #00ff00; box-shadow: 0 2px 10px #00ff00; animation-delay: 0.5s; }
+
+        @keyframes parpadeo {
+            0% { opacity: 0.4; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1.1); }
+        }
+
+        /* --- ADORNOS DE ESQUINA INTERNOS --- */
+        .adorno-esquina {
+            position: absolute; font-size: 50px; opacity: 0.4;
+        }
+        .esq-izq { top: 10px; left: 10px; transform: rotate(-45deg); }
+        .esq-der { top: 10px; right: 10px; transform: rotate(45deg); }
+
+
+        /* --- ESTILOS DE TEXTO --- */
+        .contenido { position: relative; z-index: 2; }
+
+        h1 {
+            font-size: 38px; margin: 15px 0 0 0; text-transform: uppercase;
+            letter-spacing: 1px; text-shadow: 2px 2px 4px #000; color: #fff; line-height: 1.1;
+        }
+
+        h2 { font-size: 22px; color: #ffeb3b; margin: 15px 0; font-weight: bold; }
+
+        .fecha {
+            font-size: 26px; font-weight: bold; background-color: #228B22;
+            display: inline-block; padding: 8px 25px; border-radius: 50px;
+            margin-bottom: 15px; border: 2px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        audio { width: 90%; height: 35px; margin-bottom: 5px; border-radius: 20px; }
+
+        .info-box {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 10px; padding: 15px; margin: 20px 0;
+            font-size: 18px; line-height: 1.5; border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .donacion {
+            background-color: #fff; color: #b31217; padding: 20px;
+            border-radius: 10px; margin-top: 25px;
+            display: flex; flex-direction: column; align-items: center;
+            border: 3px solid #d4af37;
+        }
+
+        .imagen-qr {
+            width: 180px; height: auto; border: 4px solid #b31217;
+            border-radius: 10px; margin: 15px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .numero-yape { font-size: 32px; font-weight: 900; color: #000; letter-spacing: 1px; }
+        .footer-text { margin-top: 15px; font-size: 12px; opacity: 0.8; }
+    </style>
+</head>
+
+<body onclick="playAudio()">
+
+    <div class="decoracion-fondo df-1">❄️</div>
+    <div class="decoracion-fondo df-2">❄️</div>
+    <div class="decoracion-fondo df-3">✨</div>
+    <div class="decoracion-fondo df-4">🌿</div>
+    <div class="decoracion-fondo df-5">✨</div>
+
+    <div class="banner-container">
+        
+        <div class="luces-container">
+            <div class="luz"></div><div class="luz"></div><div class="luz"></div>
+            <div class="luz"></div><div class="luz"></div><div class="luz"></div>
+            <div class="luz"></div><div class="luz"></div><div class="luz"></div>
+        </div>
+
+        <div class="adorno-esquina esq-izq">🌿</div>
+        <div class="adorno-esquina esq-der">🌿</div>
+
+        <div class="contenido">
+            <h1>🎅 Chocolatada Solidaria 🎄</h1>
+            <h2>7ma Zona Nuevo Milenio - AA.HH. Pulluzca (VMT)</h2>
+
+            <div class="fecha">📅 20 DE DICIEMBRE</div>
+
+            <div style="font-size: 12px; margin-bottom:5px;">🎵 Música Navideña 🎵</div>
+            
+            <audio id="musicaNavidad" controls autoplay loop>
+                <source src="music/Sleigh Ride Indian Christmas Remix.mp3" type="audio/mp3">
+                Tu navegador no soporta el audio.
+            </audio>
+
+            <div class="info-box">
+                <p><strong>¡Llevemos alegría a los niños!</strong><br>
+                Estamos recaudando fondos para regalos, panetón y chocolate.</p>
+            </div>
+
+            <div class="donacion">
+                <h3>🎁 ¡Súmate con tu Yape o Plin! 🎁</h3>
+                
+                <img src="img/qr.jpeg" alt="QR Yape" class="imagen-qr">
+
+                <div class="numero-yape">+51 912 230 026</div>
+                <p style="margin:5px 0 0 0; color:#555;">A nombre de: Sandra E. Montoya R.</p>
+            </div>
+
+            <div class="footer-text">Apoyen a los niños de Ticlo Chico</div>
+        </div>
+    </div>
+
+    <script>
+        var x = document.getElementById("musicaNavidad"); 
+        function playAudio() { x.play(); } 
+        window.onload = function() {
+            x.play().catch(function(error) { console.log("Esperando clic"); });
+        }
+    </script>
+</body>
+</html>
